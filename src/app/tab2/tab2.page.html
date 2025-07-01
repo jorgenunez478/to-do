@@ -1,43 +1,45 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Categorías </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ng-container *ngIf="showCategories">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title> Categorías </ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-item>
-    <ion-input
-      placeholder="Nueva categoría"
-      [(ngModel)]="newCategoryName"
-    ></ion-input>
-    <ion-button (click)="addCategory()">Agregar</ion-button>
-  </ion-item>
-
-  <ion-list>
-    <ion-item *ngFor="let cat of categories">
-      <ng-container *ngIf="editCategoryId !== cat.id; else editTpl">
-        <ion-label>{{cat.name}}</ion-label>
-        <ion-button fill="clear" (click)="startEdit(cat)">
-          <ion-icon name="create"></ion-icon>
-        </ion-button>
-        <ion-button
-          color="danger"
-          fill="clear"
-          slot="end"
-          (click)="removeCategory(cat)"
-        >
-          <ion-icon name="trash"></ion-icon>
-        </ion-button>
-      </ng-container>
-      <ng-template #editTpl>
-        <ion-input [(ngModel)]="editCategoryName"></ion-input>
-        <ion-button (click)="saveEdit(cat)">
-          <ion-icon name="checkmark"></ion-icon>
-        </ion-button>
-        <ion-button color="medium" (click)="cancelEdit()">
-          <ion-icon name="close"></ion-icon>
-        </ion-button>
-      </ng-template>
+  <ion-content [fullscreen]="true">
+    <ion-item>
+      <ion-input
+        placeholder="Nueva categoría"
+        [(ngModel)]="newCategoryName"
+      ></ion-input>
+      <ion-button (click)="addCategory()">Agregar</ion-button>
     </ion-item>
-  </ion-list>
-</ion-content>
+
+    <ion-list>
+      <ion-item *ngFor="let cat of categories">
+        <ng-container *ngIf="editCategoryId !== cat.id; else editTpl">
+          <ion-label>{{cat.name}}</ion-label>
+          <ion-button fill="clear" (click)="startEdit(cat)">
+            <ion-icon name="create"></ion-icon>
+          </ion-button>
+          <ion-button
+            color="danger"
+            fill="clear"
+            slot="end"
+            (click)="removeCategory(cat)"
+          >
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </ng-container>
+        <ng-template #editTpl>
+          <ion-input [(ngModel)]="editCategoryName"></ion-input>
+          <ion-button (click)="saveEdit(cat)">
+            <ion-icon name="checkmark"></ion-icon>
+          </ion-button>
+          <ion-button color="medium" (click)="cancelEdit()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ng-template>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ng-container>

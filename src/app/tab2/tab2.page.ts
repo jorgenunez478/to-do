@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category.model';
+import { FeatureFlagService } from '../services/feature-flag.service';
 
 @Component({
   selector: 'app-tab2',
@@ -13,12 +14,20 @@ import { Category } from '../models/category.model';
   styleUrls: ['./tab2.page.scss'],
 })
 export class Tab2Page {
+  showCategories = true;
   categories: Category[] = [];
   newCategoryName = '';
   editCategoryId: string | null = null;
   editCategoryName = '';
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(
+    private categoryService: CategoryService,
+    private featureFlagService: FeatureFlagService
+  ) {
+    this.featureFlagService.showCategories$.subscribe(flag => {
+      this.showCategories = flag;
+    });
+  }
 
   async ngOnInit() {
     await this.loadCategories();
